@@ -25,16 +25,19 @@ export default class BoatSearchResults extends LightningElement {
   // uses notifyLoading
   @api
   searchBoats(boatTypeId) {
+    this.isLoading = true;
+    this.notifyLoading(this.isLoading);
     console.log("entering boatSearchResults.searchBoat");
     console.log("boatTypeId: ", boatTypeId);
-
     this.boatTypeId = boatTypeId;
     getBoats({ boatTypeId: boatTypeId }).then((result) => {
       this.boats = result;
-      this.boats.forEach((element) => {
-        console.log(element.Name);
+      this.boats.forEach((boat) => {
+        console.log(boat.Name, boat.Description__c);
       });
     });
+    this.isLoading = false;
+    this.notifyLoading(this.isLoading);
     console.log("leaving boatSearchResults.searchBoat");
   }
 
@@ -64,6 +67,10 @@ export default class BoatSearchResults extends LightningElement {
       .catch((error) => {})
       .finally(() => {});
   }
-  // Check the current value of isLoading before dispatching the doneloading or loading custom event
-  notifyLoading(isLoading) {}
+  // Check the current value of isLoading before dispatching
+  // the doneloading or loading custom event
+  notifyLoading(isLoading) {
+    let eventName = isLoading ? "loading" : "doneloading";
+    return new CustomEvent(eventName);
+  }
 }
