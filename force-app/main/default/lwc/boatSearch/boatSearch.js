@@ -5,12 +5,16 @@ export default class BoatSearch extends LightningElement {
 
   // Handles loading event
   handleLoading() {
+    console.log("entering BoatSearch.handleLoading");
     this.isLoading = true;
+    console.log("leaving BoatSearch.handleLoading");
   }
 
   // Handles done loading event
   handleDoneLoading() {
+    console.log("entering BoatSearch.handleDoneLoading");
     this.isLoading = false;
+    console.log("leaving BoatSearch.handleDoneLoading");
   }
 
   // Handles search boat event

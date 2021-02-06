@@ -19,25 +19,29 @@ export default class BoatSearchResults extends LightningElement {
   messageContext;
 
   // wired getBoats method
-  wiredBoats(result) {}
+  @wire(getBoats)
+  wiredBoats(result) {
+    if (result.data) this.boats = result.data;
+  }
 
   // public function that updates the existing boatTypeId property
   // uses notifyLoading
   @api
   searchBoats(boatTypeId) {
+    console.log("entering boatSearchResults.searchBoat");
     this.isLoading = true;
     this.notifyLoading(this.isLoading);
-    console.log("entering boatSearchResults.searchBoat");
+
     console.log("boatTypeId: ", boatTypeId);
     this.boatTypeId = boatTypeId;
     getBoats({ boatTypeId: boatTypeId }).then((result) => {
       this.boats = result;
       this.boats.forEach((boat) => {
-        console.log(boat.Name, boat.Description__c);
+        // console.log(boat.Name, boat.Description__c);
       });
+      this.isLoading = false;
+      this.notifyLoading(this.isLoading);
     });
-    this.isLoading = false;
-    this.notifyLoading(this.isLoading);
     console.log("leaving boatSearchResults.searchBoat");
   }
 
@@ -70,7 +74,10 @@ export default class BoatSearchResults extends LightningElement {
   // Check the current value of isLoading before dispatching
   // the doneloading or loading custom event
   notifyLoading(isLoading) {
+    console.log("entering boatSearchResults.noifyLoading");
     let eventName = isLoading ? "loading" : "doneloading";
-    return new CustomEvent(eventName);
+    let eve = new CustomEvent(eventName, { bubbles: true });
+    this.dispatchEvent(eve);
+    console.log("leading boatSearchResults.noifyLoading");
   }
 }

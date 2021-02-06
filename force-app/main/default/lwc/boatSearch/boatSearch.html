@@ -18,7 +18,6 @@
       class="slds-p-top_small slds-is-relative"
       onloading={handleLoading}
       ondoneloading={handleDoneLoading}
-      }
     >
       <!-- Spinner goes here -->
       <template if:true={isLoading}>
@@ -27,6 +26,7 @@
           size="medium"
         ></lightning-spinner>
       </template>
+
       <!-- boatSearchResults goes here -->
       <c-boat-search-results></c-boat-search-results>
       <!-- onloading={handleLoading} ondoneloading={handleDoneLoading} -->
