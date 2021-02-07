@@ -24,8 +24,6 @@ export default class BoatsNearMe extends LightningElement {
     boatTypeId: "$boatTypeId"
   })
   wiredBoatsJSON({ error, data }) {
-    // data is returned as JSON
-
     if (data) {
       this.createMapMarkers(data);
     }
