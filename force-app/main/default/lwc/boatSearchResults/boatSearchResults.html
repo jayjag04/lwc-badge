@@ -19,7 +19,10 @@
                 onboatselect={updateSelectedTile}
               >
                 <!-- Each BoatTile goes here -->
-                <c-boat-tile boat={boat} selected-boat-id={selectedBoatId}></c-boat-tile>
+                <c-boat-tile
+                  boat={boat}
+                  selected-boat-id={selectedBoatId}
+                ></c-boat-tile>
               </lightning-layout-item>
             </template>
           </template>
@@ -28,9 +31,13 @@
     </lightning-tab>
     <lightning-tab label="Boat Editor">
       <!-- Scrollable div and lightning datatable go here -->
+      <div class="slds-scrollable_y">
+        <lightning-datatable></lightning-datatable>
+      </div>
     </lightning-tab>
     <lightning-tab label="Boats Near Me">
       <!-- boatsNearMe component goes here -->
+      <c-boats-near-me boat-type-id={boatTypeId}></c-boats-near-me>
     </lightning-tab>
   </lightning-tabset>
 </template>

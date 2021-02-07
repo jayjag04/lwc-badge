@@ -31,11 +31,8 @@ export default class BoatSearchResults extends LightningElement {
   // uses notifyLoading
   @api
   searchBoats(boatTypeId) {
-    console.log("entering boatSearchResults.searchBoat");
     this.isLoading = true;
     this.notifyLoading(this.isLoading);
-
-    console.log("boatTypeId: ", boatTypeId);
     this.boatTypeId = boatTypeId;
     getBoats({ boatTypeId: boatTypeId }).then((result) => {
       this.boats = result;
@@ -45,7 +42,6 @@ export default class BoatSearchResults extends LightningElement {
       this.isLoading = false;
       this.notifyLoading(this.isLoading);
     });
-    console.log("leaving boatSearchResults.searchBoat");
   }
 
   // this public function must refresh the boats asynchronously
@@ -54,20 +50,15 @@ export default class BoatSearchResults extends LightningElement {
 
   // this function must update selectedBoatId and call sendMessageService
   updateSelectedTile(event) {
-    console.log("entering boatSearchResults.updateSelcetedTile");
-    console.log(event.detail.boatId);
     this.selectedBoatId = event.detail.boatId;
     this.sendMessageService(this.selectedBoatId);
-    console.log("leaving boatSearchResults.updateSelcetedTile");
   }
 
   // Publishes the selected boat Id on the BoatMC.
   sendMessageService(boatId) {
-    console.log("entering boatSearchResults.sendMessageService");
     // explicitly pass boatId to the parameter recordId
     let message = { recordId: boatId };
     publish(this.messageContext, BOATMC, message);
-    console.log("leaving boatSearchResults.sendMessageService");
   }
 
   // The handleSave method must save the changes in the Boat Editor
@@ -87,10 +78,8 @@ export default class BoatSearchResults extends LightningElement {
   // Check the current value of isLoading before dispatching
   // the doneloading or loading custom event
   notifyLoading(isLoading) {
-    console.log("entering boatSearchResults.noifyLoading");
     let eventName = isLoading ? "loading" : "doneloading";
     let eve = new CustomEvent(eventName, { bubbles: true });
     this.dispatchEvent(eve);
-    console.log("leading boatSearchResults.noifyLoading");
   }
 }

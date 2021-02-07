@@ -42,12 +42,10 @@ export default class BoatMap extends LightningElement {
   @wire(getRecord, { recordId: "$recordId", fields: BOAT_FIELDS })
   wiredRecord({ error, data }) {
     // Error handling
-    console.log("inside wiredRecord");
     if (data) {
       this.error = undefined;
       const longitude = data.fields.Geolocation__Longitude__s.value;
       const latitude = data.fields.Geolocation__Latitude__s.value;
-      console.log(longitude, latitude);
       this.updateMap(longitude, latitude);
     } else if (error) {
       this.error = error;
