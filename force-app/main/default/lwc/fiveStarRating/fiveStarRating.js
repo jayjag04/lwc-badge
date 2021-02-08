@@ -1,14 +1,13 @@
 //import fivestar static resource, call it fivestar
-import {api, LightningElement} from 'lwc';
-import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
-import fivestar from '@salesforce/resourceUrl/fivestar';
+import { api, LightningElement } from "lwc";
+import { loadScript, loadStyle } from "lightning/platformResourceLoader";
+import fivestar from "@salesforce/resourceUrl/fivestar";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
-
-const EDITABLE_CLASS = 'c-rating';
-const READ_ONLY_CLASS = 'readonly c-rating';
-const ERROR_TITLE  = 'Error loading five-star';
-const ERROR_VARIANT  = 'error';
+const EDITABLE_CLASS = "c-rating";
+const READ_ONLY_CLASS = "readonly c-rating";
+const ERROR_TITLE = "Error loading five-star";
+const ERROR_VARIANT = "error";
 
 export default class FiveStarRating extends LightningElement {
   //initialize public readOnly and value properties
@@ -20,8 +19,8 @@ export default class FiveStarRating extends LightningElement {
 
   //getter function that returns the correct class depending on if it is readonly
   get starClass() {
-      let className = this.readOnly ? READ_ONLY_CLASS : EDITABLE_CLASS;
-      return className;
+    let className = this.readOnly ? READ_ONLY_CLASS : EDITABLE_CLASS;
+    return className;
   }
 
   // Render callback to load the script once the component renders.
@@ -37,20 +36,23 @@ export default class FiveStarRating extends LightningElement {
   //call the initializeRating function after scripts are loaded
   //display a toast with error message if there is an error loading script
   loadScript() {
-
-    loadScript(this, fivestar+'/rating.js').then( () => this.initializeRating() ).catch((error) => {
+    console.log("loadScript called");
+    loadScript(this, fivestar + "/rating.js")
+      .then(() => this.initializeRating())
+      .catch((error) => {
         const toastEvent = new ShowToastEvent({
-          title: ERROR_TITLE, message: error.message, variant: ERROR_VARIANT
+          title: ERROR_TITLE,
+          message: error.message,
+          variant: ERROR_VARIANT
         });
         this.dispatchEvent(toastEvent);
-    });
+      });
 
-    loadStyle(this, fivestar+'/rating.css');
-    
+    loadStyle(this, fivestar + "/rating.css");
   }
 
   initializeRating() {
-    let domEl = this.template.querySelector('ul');
+    let domEl = this.template.querySelector("ul");
     let maxRating = 5;
     let self = this;
     let callback = function (rating) {
@@ -69,10 +71,11 @@ export default class FiveStarRating extends LightningElement {
   // Method to fire event called ratingchange with the following parameter:
   // {detail: { rating: CURRENT_RATING }}); when the user selects a rating
   ratingChanged(rating) {
-      const ratingChangedEvent = new CustomEvent('ratingchange', {
-          detail: { rating: rating}
-      });
+    console.log(rating);
+    const ratingChangedEvent = new CustomEvent("ratingchange", {
+      detail: { rating: rating }
+    });
 
-      this.dispatchEvent(ratingChangedEvent);
+    this.dispatchEvent(ratingChangedEvent);
   }
 }

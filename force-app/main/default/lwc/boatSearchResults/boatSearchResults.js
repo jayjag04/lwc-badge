@@ -10,8 +10,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 const SUCCESS_TITLE = "Success";
 const MESSAGE_SHIP_IT = "Ship it!";
 const SUCCESS_VARIANT = "success";
-const ERROR_TITLE = "Error";
-const CONST_ERROR = "Error";
+const ERROR_TITLE = "Error"; 
 const ERROR_VARIANT = "error";
 
 export default class BoatSearchResults extends LightningElement {
@@ -89,7 +88,6 @@ export default class BoatSearchResults extends LightningElement {
   handleSave(event) {
     // notify loading
     const updatedFields = event.detail.draftValues;
-    console.log(updatedFields);
     // Update the records via Apex
     updateBoatList({ data: updatedFields })
       .then(() => {
