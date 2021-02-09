@@ -13,9 +13,45 @@
         <lightning-card icon-name={detailsTabIconName} title={boatName}>
           <lightning-button slot="actions" label={label.labelFullDetails} onclick={navigateToRecordViewPage}>
           </lightning-button>
+          <lightning-record-view-form object-api-name="Boat__c" record-id={boatId} density="compact">
+            <div class="slds-grid">
+              <div class="slds-col slds-size_1-of-2 slds-var-p-left_medium">
+                Boat Type
+              </div>
+              <div class="slds-col slds-size_1-of-2">
+                <lightning-output-field field-name="BoatType__c" variant="label-hidden"></lightning-output-field>
+              </div>
+            </div>
+            <div class="slds-grid">
+              <div class="slds-col slds-size_1-of-2 slds-var-p-left_medium">
+                Length
+              </div>
+              <div class="slds-col slds-size_1-of-2">
+                <lightning-output-field field-name="Length__c" variant="label-hidden"></lightning-output-field>
+              </div>
+            </div>
+            <div class="slds-grid">
+              <div class="slds-col slds-size_1-of-2 slds-var-p-left_medium">
+                Price
+              </div>
+              <div class="slds-col slds-size_1-of-2">
+                <lightning-output-field field-name="Price__c" variant="label-hidden"></lightning-output-field>
+              </div>
+            </div>
+            <div class="slds-grid">
+              <div class="slds-col slds-size_1-of-2 slds-var-p-left_medium">
+                Description
+              </div>
+              <div class="slds-col slds-size_1-of-2">
+                <lightning-output-field field-name="Description__c" variant="label-hidden"></lightning-output-field>
+              </div>
+            </div>
+          </lightning-record-view-form>
         </lightning-card>
       </lightning-tab>
-      <lightning-tab label={label.labelReviews} value={label.labelReviews}> </lightning-tab>
+      <lightning-tab label={label.labelReviews} value={label.labelReviews}>
+        <c-boat-reviews record-id={boatId}></c-boat-reviews>
+      </lightning-tab>
       <lightning-tab label={label.labelAddReview} value={label.labelAddReview}>
         <c-boat-add-review-form record-id={boatId} oncreatereview={handleReviewCreated}></c-boat-add-review-form>
       </lightning-tab>

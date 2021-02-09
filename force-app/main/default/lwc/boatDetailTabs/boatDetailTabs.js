@@ -17,12 +17,14 @@ import BOAT_ID_FIELD from "@salesforce/schema/Boat__c.Id";
 // import BOAT_NAME_FIELD for the boat Name
 import BOAT_NAME_FIELD from "@salesforce/schema/Boat__c.Name";
 const BOAT_FIELDS = [BOAT_ID_FIELD, BOAT_NAME_FIELD];
-import { MessageContext, subscribe } from "lightning/messageService";
+import { subscribe, pubish, MessageContext,  APPLICATION_SCOPE } from "lightning/messageService";
 import BOATMC from "@salesforce/messageChannel/BoatMessageChannel__c";
 import { getFieldValue, getRecord } from "lightning/uiRecordApi";
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class BoatDetailTabs extends LightningElement {
+export default class BoatDetailTabs extends NavigationMixin(LightningElement)  {
   @wire(MessageContext) messageContext;
+
   boatId;
 
   @wire(getRecord, { recordId: "$boatId", fields: BOAT_FIELDS })
@@ -56,7 +58,7 @@ export default class BoatDetailTabs extends LightningElement {
     // local boatId must receive the recordId from the message
     this.subscription = subscribe(this.messageContext, BOATMC, (message) => {
       this.boatId = message.recordId;
-    });
+    }, { scope: APPLICATION_SCOPE});
   }
 
   // Calls subscribeMC()
@@ -65,14 +67,25 @@ export default class BoatDetailTabs extends LightningElement {
   }
 
   // Navigates to record page
-  navigateToRecordViewPage() {}
+  navigateToRecordViewPage() {
+    this[NavigationMixin.Navigate]({
+      type: 'standard__recordPage',
+      attributes: {
+          recordId: this.boatId,
+          objectApiName: 'Boat__c',
+          actionName: 'view'
+      },
+  });
+  }
 
   // Navigates back to the review list, and refreshes reviews component
   handleReviewCreated() {
     // display the Reviews tab and refresh the content
     console.log('entering handleReviewCreated');
-    const tabset = this.template.querySelector('lightning-tabset');
-         console.log(tabset.activeTabValue);
+    const tabset = this.template.querySelector('lightning-tabset'); 
     tabset.activeTabValue = this.label.labelReviews;
+
+    const reviewsTab = this.template.querySelector('c-boat-reviews');
+    reviewsTab.refresh();
   }
 }

@@ -1,9 +1,13 @@
 import { api, LightningElement } from "lwc";
 
+import BOAT_REVIEW_OBJECT from '@salesforce/schema/BoatReview__c';
 import NAME_FIELD from '@salesforce/schema/BoatReview__c.Name';
 import COMMENT_FIELD from '@salesforce/schema/BoatReview__c.Comment__c';
+/*
+without the 2 imports, challenge 11 will not go through.
+I got this soultion from https://trailblazers.salesforce.com/answers?id=9064S000000CkhTQAS
+*/
 import RATING_FIELD from '@salesforce/schema/BoatReview__c.Rating__c';
-import BOAT_REVIEW_OBJECT from '@salesforce/schema/BoatReview__c';
 import BOAT_FIELD from '@salesforce/schema/BoatReview__c.Boat__c';
 
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
@@ -83,6 +87,8 @@ export default class BoatAddReviewForm extends LightningElement {
       inputFields.forEach(field => field.reset());
     }
     this.rating = 0;
-    // this.template.querySelector('c-five-star-rating').value = 0;
+    console.log(this.template.querySelector('c-five-star-rating').value );
+    this.template.querySelector('c-five-star-rating').value = 0;
+    console.log(this.template.querySelector('c-five-star-rating').value ); 
   }
 }
